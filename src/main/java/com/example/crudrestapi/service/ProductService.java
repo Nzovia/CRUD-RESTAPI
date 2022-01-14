@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 //service class stands at the mid of persistent layer and the data access layer
 public class ProductService {
-    @Autowired
+    @Autowired //injecting product repository instance here
     private ProductRepository productRepo;
 
     //first method to list all the products
@@ -23,8 +23,8 @@ public class ProductService {
         productRepo.save(productData);
     }
 
-    //getting a particular product using it's ID
-    public  Product get(Long id){
+    //getting a particular product using its ID
+    public  Product getProduct(Long id){
         //delegate a call to the repo
         return productRepo.findById(id).get();
     }
