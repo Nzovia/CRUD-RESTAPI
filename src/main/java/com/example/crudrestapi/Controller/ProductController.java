@@ -36,10 +36,28 @@ public class ProductController {
 
         }
     }
-    //restful webservices to allow users add an new object onto the database
+    //restful webservices to allow users to add an new object onto the database, we use http POST request
     @PostMapping("/productsList")
     public void add(@RequestBody Product product){
         productService.save(product);
-
     }
+
+    //RestApi to update the information that we have in the database already
+    @PutMapping("/productsList/{id}")
+    public ResponseEntity<?> updateData(@RequestBody Product product, @PathVariable Long id){
+        /*@RequestBody annotation tells spring to serialize(convert the representation of product into
+         java object*/
+        try {
+            //Before  saving the new data lets check of the data exists, based on the product Id
+            Product existsProduct = productService.getProduct(id);
+            productService.save(product);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (NoSuchElementException exception){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+
 }
